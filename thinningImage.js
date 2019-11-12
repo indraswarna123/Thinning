@@ -814,6 +814,22 @@ for (i = 0; i < 958; i++) {
   }
 }
 
+function reinitializeB1to9() {
+  for (i = 0; i < 958; i++) {
+    for (j = 0; j < 798; j++) {
+      for (var y = 1; y < 9; y++) {
+        if (!b1to9["B" + y]) {
+          b1to9["B" + y] = [];
+        }
+        b1to9["B" + y][i] = [];
+      }
+      for (var y = 1; y < 9; y++) {
+        b1to9["B" + y][i][j] = 0;
+      }
+    }
+  }
+}
+
 // Bool to check while loop if iteration k = iteration k-1
 let isStillSame = true;
 
@@ -822,6 +838,24 @@ let loopTimes = 0;
 // Loop of iteration for Thinning
 while (isStillSame) {
   loopTimes++;
+  //Initialize First Loop
+  if (loopTimes == 1) {
+    for (y = 1; y < 9; y++) {
+      for (i = 0; i < 958; i++) {
+        for (j = 0; j < 798; j++) {
+          skeleton(i, j, "B" + y);
+        }
+      }
+    }
+    itterationOfThining[loopTimes] = {};
+    for (var i = 1; i < 9; i++) {
+      itterationOfThining[loopTimes]["B" + i] = b1to9["B" + i];
+    }
+
+    matrix = itterationOfThining[loopTimes]["B8"];
+    loopTimes++;
+  }
+
   for (y = 1; y < 9; y++) {
     for (i = 0; i < 958; i++) {
       for (j = 0; j < 798; j++) {
@@ -833,22 +867,36 @@ while (isStillSame) {
   for (var i = 1; i < 9; i++) {
     itterationOfThining[loopTimes]["B" + i] = b1to9["B" + i];
   }
-  if (loopTimes !== 1) {
-    if (
-      itterationOfThining[loopTimes][B1] ==
-      itterationOfThining[loopTimes - 1][B1]
-    ) {
-      isStillSame = false;
-    } else {
-      matrix = itterationOfThining[loopTimes][B8];
+
+  //Check if the current and before pixel is still the same or not
+  let countLoopCurrentPixel = 0;
+  let countLoopMinus1Pixel = 0;
+  for (i = 0; i < 958; i++) {
+    for (j = 0; j < 798; j++) {
+      if (itterationOfThining[loopTimes]["B8"][i][j] == 0) {
+        countLoopCurrentPixel += 1;
+      }
+
+      if (itterationOfThining[loopTimes - 1]["B1"][i][j] == 0) {
+        countLoopMinus1Pixel += 1;
+      }
     }
-  } else {
+  }
+
+  if (countLoopCurrentPixel !== countLoopMinus1Pixel) {
     matrix = itterationOfThining[loopTimes]["B8"];
+  } else {
+    console.log(
+      "Current Loop : " +
+        loopTimes +
+        " Count After Pix : " +
+        countLoopCurrentPixel +
+        " Count Before Pix : " +
+        countLoopMinus1Pixel
+    );
+    isStillSame = false;
   }
 }
-
-//Check Amount of Loop
-console.log(loopTimes);
 
 // Store Thinned Pixel into Header
 for (i = 0; i < 958; i++) {
