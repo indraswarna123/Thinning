@@ -4,7 +4,7 @@ const fs = require("fs");
 function getByteArray(filePath) {
   let fileData = fs.readFileSync(filePath).toString("hex");
   let result = [];
-  for (var i = 0; i < fileData.length; i += 2)
+  for (let i = 0; i < fileData.length; i += 2)
     result.push("0x" + fileData[i] + "" + fileData[i + 1]);
   return result;
 }
@@ -21,7 +21,7 @@ for (i = 0; i < RGB; i++) {
   occurence[i] = 0;
 }
 
-for (var i = 0; i < result.length; i++) {
+for (let i = 0; i < result.length; i++) {
   if (i > 14) {
     let string = result[i];
     let parsedInt = parseInt(string);
@@ -45,7 +45,7 @@ var tLoop = {
   }
 };
 while (breakingBool) {
-  for (var i = 0; i < Object.keys(occurence).length; i++) {
+  for (let i = 0; i < Object.keys(occurence).length; i++) {
     if (i < currentTLoop) {
       currentM1Upper += occurence[i] * i;
       currentM1Lower += occurence[i];
@@ -774,7 +774,7 @@ function B8(i, j) {
 onlyImage = [];
 
 //Cast Global Tresholded Image into background of 0 and pixel 1
-for (var i = 0; i < result.length; i++) {
+for (let i = 0; i < result.length; i++) {
   if (i > 14) {
     let string = result[i];
     let parsedInt = parseInt(string);
@@ -796,7 +796,7 @@ for (i = 0; i < 958; i++) {
   for (j = 0; j < 798; j++) {
     if (!matrix[i]) {
       matrix[i] = [];
-      for (var y = 1; y < 9; y++) {
+      for (let y = 1; y < 9; y++) {
         if (!b1to9["B" + y]) {
           b1to9["B" + y] = [];
         }
@@ -807,26 +807,10 @@ for (i = 0; i < 958; i++) {
     // if (matrix[i][j] == 1) {
     //   console.log(matrix[i][j]);
     // }
-    for (var y = 1; y < 9; y++) {
+    for (let y = 1; y < 9; y++) {
       b1to9["B" + y][i][j] = 0;
     }
     tempPixel++;
-  }
-}
-
-function reinitializeB1to9() {
-  for (i = 0; i < 958; i++) {
-    for (j = 0; j < 798; j++) {
-      for (var y = 1; y < 9; y++) {
-        if (!b1to9["B" + y]) {
-          b1to9["B" + y] = [];
-        }
-        b1to9["B" + y][i] = [];
-      }
-      for (var y = 1; y < 9; y++) {
-        b1to9["B" + y][i][j] = 0;
-      }
-    }
   }
 }
 
@@ -848,7 +832,7 @@ while (isStillSame) {
       }
     }
     itterationOfThining[loopTimes] = {};
-    for (var i = 1; i < 9; i++) {
+    for (let i = 1; i < 9; i++) {
       itterationOfThining[loopTimes]["B" + i] = b1to9["B" + i];
     }
 
@@ -864,7 +848,7 @@ while (isStillSame) {
     }
   }
   itterationOfThining[loopTimes] = {};
-  for (var i = 1; i < 9; i++) {
+  for (let i = 1; i < 9; i++) {
     itterationOfThining[loopTimes]["B" + i] = b1to9["B" + i];
   }
 
